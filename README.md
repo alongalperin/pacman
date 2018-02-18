@@ -1,4 +1,4 @@
-# Pacman
+# PAC-MAN by Alon
   
 This game created as assignment to Internet Development course I took in Ben Gurion University, Israel, May 2017.  
   
