@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pacman Game</title>
+    <link type="text/css" rel="stylesheet" href="style/main.css">
+    <script type="text/javascript" src="scripts/jquery-3.2.0.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.validate.min.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>  
+    <!--<link type="text/css" rel="stylesheet" href="style/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/bootstrap-datepicker3.css">
+    <link type="text/css" rel="stylesheet" href="style/main.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+</head>
+<body>
+<header id="header">
+    <p style="background-color: black; width: 52%; color: #FFA500; font-size: 24px;">
+        PacMan Game 
+        <a href="http://alonprofile.com/assignment1/index.html" class="headerLink">Alon Galperin</a>
+        
+    </p>
+</header>
+ <div id='main'>
+    <article id="1" class="sectionActive">
+        <div id="div_welcome">
+            <center>
+                <h1 class="display-4">Welcome To Pacman Game</h1><br />
+                <img src="images/layout/halloween.gif" />
+                <div style="text-align:center; padding: 24px; width: 50%; font-family: Helvetica">
+                    <div class="divbtn_welcome" onclick="changeArticle(3)">
+                        <h3>Login</h3>
+                    </div>
+                    <div style="display:inline-block; width:50px"></div> <!-- space between buttons -->
+                    <div class="divbtn_welcome" onclick="changeArticle(2)">
+                        <h3>Register</h3>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </article>
+    <article id="2" class="sectionHidden">
+    <div id="div_reg">
+        Register
+        <h3 id="p_regSuccsess" style="color: green; font-family: ariel"></h3>
+        <form action="mailto:alongal@post.bgu.ac.il" method="post" name="registration" autocomplete="off">
+        <table>
+        <tr>
+            <td class="td_right">Username:</td>
+            <td><input type="text" name="username" class="inp_text"/></td>
+        </tr>
+        <tr>
+            <td class="td_right">Password:</td>
+            <td><input type="password" name="password" class="inp_text"/></td>
+        </tr>
+        <tr>
+            <td class="td_right">Firstname:</td>
+            <td><input type="text" name="firstname" class="inp_text"/></td>
+        </tr>
+        <tr>
+            <td class="td_right">Lastname:</td>
+            <td><input type="text" name="lastname" class="inp_text"/></td>
+        </tr>
+        <tr>
+            <td class="td_right">Email:</td>
+            <td><input type="text" name="email" class="inp_text"/></td>
+        </tr>
+        <tr>
+            <td class="td_right">Choose Your Birthdate:</td>
+            <td>
+                <div class="input-group date">
+                    <input name="birth_date" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;"><button id="btn_register" type="submit" class="btnCustom">Register</button></td>
+        </tr>
+        </table>
+        </form>
+    </div>
+    </article>
+    <article id="3" class="sectionHidden"> <!-- LOGIN  -->
+        
+    <img src="images/layout/instructions.png" id="instructions"/>
+        
+    <div id="div_login"> <!-- LOGIN -->
+        <h3>LOGIN</h3>
+        <h4 class="login_lbl">Username</h4>
+        <input id="inp_username" type="text" class="inp_text"> <br />
+        <h4 class="login_lbl">Password</h4>
+        <input id="inp_pwd" type="password" class="inp_text"> <br />
+        <button onclick="checkLogin()" class="btnCustom">LOGIN</button>
+        <div id="loginComments"></div>
+    </div>
+        
+    <div id='gameSettings'> <!-- config game settings -->
+        <table>
+            <tr>
+            <td class="td_right" style="width: 300px;">
+                num of ghosts: 
+            </td>
+            <td>
+            <select id="slct_numOfGhosts" class="selectpicker">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+            </td>
+            </tr>
+            <tr style="margin-top: 10px;">
+            <td class="td_right" style="width: 150px;">
+                num of coins:
+            </td>
+            <td>
+            <select id="slct_numCoins" class="selectpicker">
+                <option>50</option>
+                <option>55</option>
+                <option>60</option>
+                <option>65</option>
+                <option>70</option>
+                <option>75</option>
+                <option>80</option>
+                <option>85</option>
+                <option>90</option>
+            </select> <br />
+            </td>
+            </tr>
+            <tr style="margin-top: 10px;">
+            <td class="td_right" style="width: 150px;">
+                Duration (in seconds):
+            </td>
+            <td>
+                <input type='button' value='-' class='qtyminus' field='quantity' style="font-weight: bold;" />
+                <input id="inp_duration" type='text' name='quantity' value='60' class='qty' style="margin-bottom: 0px !important; width:50px" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+                <input type='button' value='+' class='qtyplus' field='quantity' style="font-weight: bold;" />
+            </td>
+            </tr>
+            <tr>
+            <td colspan="2" style="text-align: center;">
+                <button onclick="getPreperedPlaying()" class="btnCustom">start</button>
+            </td>
+            </tr>
+        </table>
+    </div>
+        
+    <div id="div_game"> <!-- game -->
+        <p id="p_username" style="margin-bottom: 0px"><span></span></p>
+        <p id="points"></p>
+        <p id="timer"></p>
+        <div id="lives"></div>
+        <canvas id="myCanvas" width="460" height="480"></canvas>
+        <div id="div_endgame">
+            <p id="p_endGameStatus">game end</p>
+            <p id="div_endGameScore">You scored: <span></span></p>
+            <p id="div_topScore">High Score:<span></span></p>
+            <button id="btn_reset" onclick="playAgain()">
+             Play Again
+            <span class="playAgain"></span>
+            </button>
+        </div>
+    </div>
+    </article>
+             
+    <nav>
+        <ul id="navList">
+            <div class="wrapper">
+                <li><a href="#" id="navLink1" class="navActive" onclick="changeArticle(1)">Welcome</a></li>
+            </div>
+            <div class="wrapper">
+                <li><a href="#" id="navLink2" class="navNotActive" onclick="changeArticle(2)">Register</a></li>
+            </div>
+            <div class="wrapper">
+                <li><a href="#" id="navLink3" class="navNotActive" onclick="changeArticle(3)">Login</a></li>
+            </div>
+            <div class="wrapper">
+                <li><a href="#" class="navNotActive" data-toggle="modal" data-target="#exampleModal">
+                    About</a></li>
+            </div>
+<!-- Modal -->
+<div id="exampleModal" class="modal" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="text-align:left;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">About</h4>
+      </div>
+      <div class="modal-body">
+        <h3>Alon Galperin</h3>
+        <p>jQuery Plugin in use are: .Validate for validating the registration form.<br/>
+        We used template that uses CSS Flex-Box. In smaller screens the header and navbars will  change their position to be one on top of the other- in order to get cleaner look.
+        </p>
+        <p>
+        The difficulties we had during the making of the game were mainly around 
+        moving the charecters around the board game and not hitting the walls. <br/>
+        A big challenge also was how to make the ghosts chase Pacman, we used a* algorighm to solve that. <br />
+        Another difficulty was to learn how to use the jQuery.Validate framework.
+        </p>
+        <img src="images/layout/logos.png" style="width:100%; margin-top: 15px;">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+        </ul>
+    </nav>
+    <aside></aside>
+ </div>
+<footer>
+    This site was made by Alon Galperin for Web Development Course in Ben Gurion University. <br />
+    Email: <a href="mailto:alongal@post.bgu.ac.il">Alon</a>
+</footer>
+
+<script type="text/javascript" src="scripts/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="scripts/main.js"></script>
+<script type="text/javascript" src="scripts/validation.js"></script>
+<script type="text/javascript" src="scripts/grid.js"></script>
+<script type="text/javascript" src="scripts/board.js"></script>
+<script type="text/javascript" src="scripts/pathfinder.js"></script>
+<script type="text/javascript" src="scripts/game.js"></script>
+<script type="text/javascript" src="scripts/plusminus.js"></script>
+</body>
+</html>
+
